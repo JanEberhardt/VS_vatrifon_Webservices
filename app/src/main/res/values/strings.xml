@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">VS_vatrifon_Webservices</string>
+    <string name="app_name">VS Vatrifon Webservices</string>
+    <string name="rest_button">Rest</string>
 </resources>

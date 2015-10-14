@@ -18,7 +18,7 @@ public class HttpRawRequestImpl implements HttpRawRequest{
     @Override
     public String generateRequest() {
         StringBuilder sb = new StringBuilder();
-        sb.append("GET "+host+"/"+path+" HTTP/1.1\r\n");
+        sb.append("GET "+path+" HTTP/1.1\r\n");
         sb.append("Host: "+host+":"+port+"\r\n");
         sb.append("Accept: text/html\r\n");
         sb.append("Connection: close\r\n");

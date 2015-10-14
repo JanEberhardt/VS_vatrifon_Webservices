@@ -6,9 +6,9 @@ package ch.ethz.inf.vs.a2.http;
 public abstract class SimpleHttpClientFactory {
     public static SimpleHttpClient getInstance(Type type) {
         switch (type) {
-/*            case RAW:
+            case RAW:
                 return new RawHttpClient();
-            case LIB:
+            /*case LIB:
                 return new LibHttpClient();*/
             default:
                 return null;
