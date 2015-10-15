@@ -21,5 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button restServer = (Button) findViewById(R.id.rest_server);
+        restServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RestServerActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 }

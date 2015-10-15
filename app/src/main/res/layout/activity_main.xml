@@ -13,4 +13,10 @@
         android:text="@string/rest_button"
         android:id="@+id/rest"
         android:layout_gravity="center_horizontal" />
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/rest_server_button"
+    android:id="@+id/rest_server"
+    android:layout_gravity="center_horizontal" />
 </LinearLayout>
