@@ -6,4 +6,8 @@ public class HttpRawRequestFactory {
 		// return HttpRawRequest implementation
 		return new HttpRawRequestImpl(host, port, path);
 	}
+	public static HttpRawRequest getInstance(String host, int port, String path, boolean json){
+
+        return new HttpRawRequestImpl(host, port,path,json);
+    }
 }
