@@ -28,7 +28,7 @@ public class HttpRawRequestImpl implements HttpRawRequest{
 
     @Override
     public String getHost() {
-        return path;
+        return host;
     }
 
     @Override

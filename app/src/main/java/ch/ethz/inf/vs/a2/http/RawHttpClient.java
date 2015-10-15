@@ -5,33 +5,46 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
  * Created by jan on 14.10.15.
+ *
+ * uses java.net.Socket to execute a raw http request and get the result back
+ *
+ * note: don't call execute from the UI-tread (will trigger NetworkOnMainTreadException)
+ *
  */
 public class RawHttpClient implements SimpleHttpClient{
-    public static final String serverName = "vslab.inf.ethz.ch";
-    public static final int serverPort = 8081;
-    public InetAddress serverAddress;
+    private InetAddress serverAddress;
 
     @Override
     public String execute(Object request) {
+        // first of all let's make a DNS lookup to get the servers IP address
+        // todo: cache this and don't do it all the time?
         try {
-            serverAddress = InetAddress.getByName(serverName);
+            serverAddress = InetAddress.getByName(RemoteServerConfiguration.HOST);
         }
         catch (UnknownHostException e){
             Log.d("###", e.toString());
         }
 
+        // now let's execute the command via a socket and get back the result!
         try {
-            Socket s = new Socket(serverAddress, serverPort);
-            BufferedReader input =
+            Socket s = new Socket(serverAddress.getHostAddress(), RemoteServerConfiguration.REST_PORT);
+            PrintWriter pw = new PrintWriter(s.getOutputStream());
+            pw.print(request.toString());
+            pw.flush();
+            BufferedReader buf =
                     new BufferedReader(new InputStreamReader(s.getInputStream()));
-            String answer = input.readLine();
-            Log.d("###", answer);
+            String answerLine;
+            StringBuilder sb = new StringBuilder();
+            while((answerLine = buf.readLine()) != null)
+                sb.append(answerLine);
+            return sb.toString();
         }
         catch (IOException e){
             Log.d("###", e.toString());

@@ -5,10 +5,10 @@ package ch.ethz.inf.vs.a2.sensor;
 public abstract class SensorFactory {
 	public static Sensor getInstance(Type type) {
 		switch (type) {
-/*		case RAW_HTTP:
+		case RAW_HTTP:
 			// return Sensor implementation using a raw HTTP request
 			return new RawHttpSensor();
-		case HTML:
+/*		case HTML:
 			// return Sensor implementation using text/html representation
 			return new HtmlSensor();
 		case JSON:

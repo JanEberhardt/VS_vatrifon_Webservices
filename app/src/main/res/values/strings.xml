@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">VS Vatrifon Webservices</string>
     <string name="rest_button">Rest</string>
+
+    <string name="refresh">refresh</string>
+    <string name="reading_name">Sensor Reading:</string>
+    <string name="value_updated_toast">Value has been updated!</string>
 </resources>

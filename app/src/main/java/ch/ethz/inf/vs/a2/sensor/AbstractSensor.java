@@ -1,9 +1,9 @@
 package ch.ethz.inf.vs.a2.sensor;
 
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import android.os.AsyncTask;
 
 import ch.ethz.inf.vs.a2.http.SimpleHttpClient;
 
