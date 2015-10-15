@@ -23,6 +23,8 @@
             android:name=".RestServerActivity"
             android:label="@string/title_activity_rest_server" >
         </activity>
+        <activity android:name=".SoapActivity" >
+        </activity>
     </application>
 
 </manifest>

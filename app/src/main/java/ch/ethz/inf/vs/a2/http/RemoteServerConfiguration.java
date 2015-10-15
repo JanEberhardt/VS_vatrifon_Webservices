@@ -14,4 +14,5 @@ public interface RemoteServerConfiguration {
 
     // added by jan
 	public static final String SPOT_1_TEMP_URL = "/sunspots/Spot1/sensors/temperature";
+	public static final String SPOT_3_URL = "/SunSPOTWebServices/SunSPOTWebservice";
 }

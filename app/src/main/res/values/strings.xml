@@ -3,6 +3,7 @@
 
     <string name="rest_button">Rest</string>
     <string name="rest_server_button">Rest Server</string>
+    <string name="soap_button">Soap</string>
 
     <string name="title_activity_rest_server">RestServerActivity</string>
     

@@ -10,15 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ch.ethz.inf.vs.a2.sensor.HtmlSensor;
-import ch.ethz.inf.vs.a2.sensor.JsonSensor;
-import ch.ethz.inf.vs.a2.sensor.RawHttpSensor;
+import ch.ethz.inf.vs.a2.sensor.Sensor;
+import ch.ethz.inf.vs.a2.sensor.SensorFactory;
 import ch.ethz.inf.vs.a2.sensor.SensorListener;
 
 public class RestActivity extends AppCompatActivity implements SensorListener {
 
     private TextView reading, currentMethod;
-    private RawHttpSensor s;
+    private Sensor s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class RestActivity extends AppCompatActivity implements SensorListener {
 
         // create a new RawHttpSensor and register this class
         // later the user can switch between the sensors by using the menu
-        s = new RawHttpSensor();
+        s = SensorFactory.getInstance(SensorFactory.Type.RAW_HTTP);
         s.registerListener(this);
         s.getTemperature();
 
@@ -71,7 +70,6 @@ public class RestActivity extends AppCompatActivity implements SensorListener {
     @Override
     public void onReceiveString(String message) {
         Log.d("###", "RestActivity received string:" + message);
-
     }
 
     @Override
@@ -86,27 +84,24 @@ public class RestActivity extends AppCompatActivity implements SensorListener {
         switch (item.getItemId()) {
             case R.id.raw:
                 s.unregisterListener(this);
-                s = new RawHttpSensor();
-                s.registerListener(this);
-                s.getTemperature();
+                s = SensorFactory.getInstance(SensorFactory.Type.RAW_HTTP);
                 currentMethod.setText(R.string.raw_method);
-                return true;
+                break;
             case R.id.html:
                 s.unregisterListener(this);
-                s = new HtmlSensor();
-                s.registerListener(this);
-                s.getTemperature();
+                s = SensorFactory.getInstance(SensorFactory.Type.HTML);
                 currentMethod.setText(R.string.html_method);
-                return true;
+                break;
             case R.id.json:
                 s.unregisterListener(this);
-                s = new JsonSensor();
-                s.registerListener(this);
-                s.getTemperature();
+                s = SensorFactory.getInstance(SensorFactory.Type.JSON);
                 currentMethod.setText(R.string.json_method);
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        s.registerListener(this);
+        s.getTemperature();
+        return true;
     }
 }
