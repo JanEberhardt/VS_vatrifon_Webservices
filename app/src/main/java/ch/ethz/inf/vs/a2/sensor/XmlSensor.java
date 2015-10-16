@@ -37,29 +37,27 @@ public class XmlSensor extends AbstractSensor {
         HttpPost post = new HttpPost("http://"+host+":"+port+path);
 
         StringBuilder sb = new StringBuilder();
-        // todo: do this later better in an actual xml!
+        // todo: according to wire-shark this is kind of right!
+        // todo: I get an unknown media type error from the server back!
         // http://stackoverflow.com/questions/2559948/android-sending-xml-via-http-post-soap
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\">");
-        sb.append("S:Header/>");
-        sb.append("<S:Body>");
-        sb.append("<ns2:getSpot xmlns:ns2 = \"http://webservices.vslecture.vs.inf.ethz.ch/\">");
-        sb.append("<id>Spot3</id>");
-        sb.append("</ns2:getSpot>");
-        sb.append("</S:Body>");
-        sb.append("</S:Envelope>");
+        sb.append("<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+        sb.append("<Body>");
+        sb.append("<getSpot xmlns= \"http://webservices.vslecture.vs.inf.ethz.ch/\">");
+        sb.append("<id xmlns=\"\">Spot3</id>");
+        sb.append("</getSpot>");
+        sb.append("</Body>");
+        sb.append("</Envelope>");
         StringEntity se = null;
         try {
             se = new StringEntity(sb.toString(), HTTP.UTF_8);
             se.setContentType("text/xml");
+            post.setHeader("Content-Type", "application/xml;charset=UTF-8");
+            post.addHeader("Accept", "application/xml, text/xml, */*");
+            post.addHeader("SOAPAction", "\"\"");
+            post.setEntity(se);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        post.setHeader("Content-Type", "application/soap+xml;charset=UTF-8");
-        post.addHeader("Accept", "text/xml");
-        post.setEntity(se);
-        Log.d("###", post.toString());
-        Log.d("###", post.getURI().toString());
-        Log.d("###", Arrays.deepToString(post.getAllHeaders()));
 
         new AsyncWorker().execute(post);
     }

@@ -13,6 +13,8 @@
     <string name="raw_method">Using HTTP Raw Client</string>
     <string name="html_method">Using Apache HTTP Client</string>
     <string name="json_method">Using json</string>
+    <string name="xml_method">Using XML and HTML post</string>
+    <string name="soap_method">Using SOAP and kSoap lib</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

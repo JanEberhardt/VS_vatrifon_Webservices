@@ -17,9 +17,9 @@ public abstract class SensorFactory {
 		case XML:
 			// return Sensor implementation using application/xml representation
 			return new XmlSensor();
-/*		case SOAP:
+		case SOAP:
 			// return Sensor implementation using a SOAPObject
-			return new SoapSensor();*/
+			return new SoapSensor();
 		default:
 			return null;
 		}
