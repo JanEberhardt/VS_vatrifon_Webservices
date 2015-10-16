@@ -4,10 +4,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import ch.ethz.inf.vs.a2.http.HttpRawRequest;
 import ch.ethz.inf.vs.a2.http.HttpRawRequestFactory;
-import ch.ethz.inf.vs.a2.http.RawHttpClient;
 import ch.ethz.inf.vs.a2.http.RemoteServerConfiguration;
+import ch.ethz.inf.vs.a2.http.SimpleHttpClientFactory;
 
 /**
  * Created by jan on 14.10.15.
@@ -20,7 +19,11 @@ public class RawHttpSensor extends AbstractSensor{
 
     @Override
     protected void setHttpClient() {
-        this.httpClient = new RawHttpClient();
+        this.httpClient = SimpleHttpClientFactory.getInstance(SimpleHttpClientFactory.Type.RAW);
+    }
+
+    protected Object generateRequest(String host, int port, String path) {
+        return HttpRawRequestFactory.getInstance(host, port, path).generateRequest();
     }
 
     @Override
@@ -28,7 +31,8 @@ public class RawHttpSensor extends AbstractSensor{
         // we parse the html string by using Jsoup!
         // this a an external library that we added in the libs folder
         Document doc = Jsoup.parse(response);
-        Elements es = doc.getElementsByClass("getterValue");
+        // finds spans with class getterValue
+        Elements es = doc.select("span.getterValue");
         String res = es.get(0).html();
         return Double.parseDouble(res);
     }
@@ -37,11 +41,9 @@ public class RawHttpSensor extends AbstractSensor{
     public void getTemperature() throws NullPointerException {
         String host = RemoteServerConfiguration.HOST;
         int port = RemoteServerConfiguration.REST_PORT;
+        String path = RemoteServerConfiguration.SPOT_1_TEMP_URL;
 
-        // todo: put this in a nicer place maybe?
-        String path = "/sunspots/Spot1/sensors/temperature";
-
-        HttpRawRequest r = HttpRawRequestFactory.getInstance(host, port, path);
-        new AsyncWorker().execute(r.generateRequest());
+        Object req = generateRequest(host, port, path);
+        new AsyncWorker().execute(req);
     }
 }

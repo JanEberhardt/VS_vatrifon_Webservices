@@ -21,6 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button soap = (Button) findViewById(R.id.soap);
+        soap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), SoapActivity.class);
+                startActivity(i);
+
+            }
+        });
         Button restServer = (Button) findViewById(R.id.rest_server);
         restServer.setOnClickListener(new View.OnClickListener() {
             @Override

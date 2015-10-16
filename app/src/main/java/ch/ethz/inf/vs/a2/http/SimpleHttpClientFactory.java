@@ -8,8 +8,8 @@ public abstract class SimpleHttpClientFactory {
         switch (type) {
             case RAW:
                 return new RawHttpClient();
-            /*case LIB:
-                return new LibHttpClient();*/
+            case LIB:
+                return new LibHttpClient();
             default:
                 return null;
         }

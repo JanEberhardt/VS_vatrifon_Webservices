@@ -24,7 +24,6 @@ public class RawHttpClient implements SimpleHttpClient{
     @Override
     public String execute(Object request) {
         // first of all let's make a DNS lookup to get the servers IP address
-        // todo: cache this and don't do it all the time?
         try {
             serverAddress = InetAddress.getByName(RemoteServerConfiguration.HOST);
         }
@@ -34,16 +33,18 @@ public class RawHttpClient implements SimpleHttpClient{
 
         // now let's execute the command via a socket and get back the result!
         try {
+            if(serverAddress == null)
+                return null;
             Socket s = new Socket(serverAddress.getHostAddress(), RemoteServerConfiguration.REST_PORT);
             PrintWriter pw = new PrintWriter(s.getOutputStream());
             pw.print(request.toString());
             pw.flush();
-            BufferedReader buf =
-                    new BufferedReader(new InputStreamReader(s.getInputStream()));
+            BufferedReader buf = new BufferedReader(new InputStreamReader(s.getInputStream()));
             String answerLine;
             StringBuilder sb = new StringBuilder();
-            while((answerLine = buf.readLine()) != null)
+            while((answerLine = buf.readLine()) != null) {
                 sb.append(answerLine);
+            }
             return sb.toString();
         }
         catch (IOException e){

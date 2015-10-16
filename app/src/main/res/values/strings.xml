@@ -2,14 +2,19 @@
     <string name="app_name">VS Vatrifon Webservices</string>
     <string name="rest_button">Rest</string>
     <string name="rest_server_button">Rest Server</string>
+    <string name="soap_button">Soap</string>
 
+    <string name="title_activity_rest_server">RestServerActivity</string>
+    
     <string name="start_server">Start Server</string>
     <string name="stop_server">Stop Server</string>
 
     <string name="refresh">refresh</string>
     <string name="reading_name">Sensor Reading:</string>
     <string name="value_updated_toast">Value has been updated!</string>
-    <string name="title_activity_rest_server">RestServerActivity</string>
+    <string name="raw_method">Using HTTP Raw Client</string>
+    <string name="html_method">Using Apache HTTP Client</string>
+    <string name="json_method">Using json</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
