@@ -3,6 +3,9 @@
     <string name="rest_button">Rest</string>
     <string name="rest_server_button">Rest Server</string>
 
+    <string name="start_server">Start Server</string>
+    <string name="stop_server">Stop Server</string>
+
     <string name="refresh">refresh</string>
     <string name="reading_name">Sensor Reading:</string>
     <string name="value_updated_toast">Value has been updated!</string>
