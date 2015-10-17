@@ -25,16 +25,16 @@ public class SoapActivity extends AppCompatActivity implements SensorListener{
         setContentView(R.layout.activity_soap);
 
         // get the TextView where we later display the value
-        reading = (TextView) findViewById(R.id.restReading);
+        reading = (TextView) findViewById(R.id.rest_reading);
         s = SensorFactory.getInstance(SensorFactory.Type.XML);
         s.registerListener(this);
         s.getTemperature();
 
-        currentMethod = (TextView) findViewById(R.id.currentMethod);
+        currentMethod = (TextView) findViewById(R.id.current_method);
         currentMethod.setText(R.string.xml_method);
 
         // set the onclick listener for the refresh button
-        Button b = (Button) findViewById(R.id.restRefresh);
+        Button b = (Button) findViewById(R.id.rest_refresh);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

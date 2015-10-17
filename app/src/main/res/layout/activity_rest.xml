@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/refresh"
-        android:id="@+id/restRefresh"
+        android:id="@+id/rest_refresh"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal" />
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/currentMethod"
+        android:id="@+id/current_method"
         android:layout_gravity="center_horizontal" />
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="0.0"
-            android:id="@+id/restReading"
+            android:id="@+id/rest_reading"
             android:layout_gravity="right"
             android:layout_weight="1" />
     </LinearLayout>

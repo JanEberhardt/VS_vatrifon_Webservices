@@ -25,11 +25,11 @@ public class RestActivity extends AppCompatActivity implements SensorListener {
         setContentView(R.layout.activity_rest);
 
         // get the TextView where we display the method to get the values from the server
-        currentMethod = (TextView) findViewById(R.id.currentMethod);
+        currentMethod = (TextView) findViewById(R.id.current_method);
         currentMethod.setText(R.string.raw_method);
 
         // get the TextView where we later display the value
-        reading = (TextView) findViewById(R.id.restReading);
+        reading = (TextView) findViewById(R.id.rest_reading);
 
         // create a new RawHttpSensor and register this class
         // later the user can switch between the sensors by using the menu
@@ -38,7 +38,7 @@ public class RestActivity extends AppCompatActivity implements SensorListener {
         s.getTemperature();
 
         // set the onclick listener for the refresh button
-        Button b = (Button) findViewById(R.id.restRefresh);
+        Button b = (Button) findViewById(R.id.rest_refresh);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
