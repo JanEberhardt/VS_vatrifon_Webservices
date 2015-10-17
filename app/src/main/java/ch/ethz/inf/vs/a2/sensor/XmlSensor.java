@@ -1,12 +1,22 @@
 package ch.ethz.inf.vs.a2.sensor;
 
 import android.util.Log;
+import android.util.Xml;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.protocol.HTTP;
+import org.kxml2.io.KXmlParser;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import ch.ethz.inf.vs.a2.http.RemoteServerConfiguration;
@@ -23,9 +33,28 @@ public class XmlSensor extends AbstractSensor {
 
     @Override
     public double parseResponse(String response) {
-        Log.d("###", "parseResponse");
-        Log.d("###", "res:"+response);
-        return 0;
+        String textResult = response;
+        InputStream resultStream = new ByteArrayInputStream(textResult.getBytes());
+
+        XmlPullParser parser;
+        try {
+            parser = Xml.newPullParser();
+            parser.setInput(resultStream, null);
+            parser.nextTag();
+
+            while(true){
+                if(parser.next() == parser.END_TAG) continue;
+
+                String tag = parser.getName();
+                if (tag == null || !tag.equals("temperature")) continue;
+
+                parser.next();
+                String val = parser.getText();
+                return Double.parseDouble(val);
+            }
+        } catch (IOException | XmlPullParserException e){
+            return 0.0;
+        }
     }
 
     @Override
