@@ -24,7 +24,7 @@ public class LibHttpClient implements SimpleHttpClient {
             Log.d("###", "LibHttpClient.execute()");
             HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute((HttpUriRequest) request);
-            Log.d("###", response.getStatusLine().toString());
+            Log.d("###", "status: "+response.getStatusLine().toString());
             BufferedReader buf =
                     new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             String answerLine;
@@ -34,7 +34,7 @@ public class LibHttpClient implements SimpleHttpClient {
             Log.d("###", "execute res:"+sb.toString());
             return sb.toString();
         } catch (IOException e) {
-            Log.d("###", e.toString());
+            Log.d("###asdf", e.toString());
         }
         return null;
     }
