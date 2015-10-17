@@ -1,8 +1,15 @@
 package ch.ethz.inf.vs.a2;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,33 +33,49 @@ public class RestServerActivity extends AppCompatActivity {
     Button startServer;
     Button stopServer;
     TextView status;
-    Intent service;
+    Intent service = null;
+    NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_server);
 
-        service = new Intent(this, RestServerService.class);
 
         startServer = (Button) findViewById(R.id.start_server_btn);
         stopServer = (Button) findViewById(R.id.stop_server_btn_server_btn);
         status = (TextView) findViewById(R.id.status_tv);
 
-        if (serverRunning) {
-            startServer.setVisibility(View.GONE);
-            stopServer.setVisibility(View.VISIBLE);
-            status.setText("The Server is running on IP " + serverIP + " on port " + SERVER_PORT);
-        } else {
-            startServer.setVisibility(View.VISIBLE);
-            stopServer.setVisibility(View.GONE);
-            status.setText("The Server is currently not running.");
-        }
-
+        service = new Intent(this, RestServerService.class);
 
         startServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                // initialize the notification
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("REST SERVER")
+                                .setContentText("Click to manage the Server");
+
+                Intent resultIntent = new Intent(getApplicationContext(), RestServerActivity.class);
+                resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(
+                                getApplicationContext(),
+                                0,
+                                resultIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                // don't let the notification go away
+                mBuilder.setOngoing(true);
+
+                mBuilder.setContentIntent(resultPendingIntent);
+                notificationManager.notify(1, mBuilder.build());
+
                 startService(service);
                 serverRunning = true;
                 startServer.setVisibility(View.GONE);
@@ -63,7 +86,7 @@ public class RestServerActivity extends AppCompatActivity {
                     for (NetworkInterface i : Collections.list(interfaces)) {
                         if (i.getDisplayName().contains("wlan0")) {
                             for (InetAddress address : Collections.list(i.getInetAddresses())) {
-                                if(address.toString().length()<20) {
+                                if (address.toString().length() < 20) {
                                     serverIP = address.toString().substring(1);
                                 }
                             }
@@ -82,6 +105,8 @@ public class RestServerActivity extends AppCompatActivity {
         stopServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notificationManager.cancel(1);
+
                 stopService(service);
                 serverRunning = false;
                 startServer.setVisibility(View.VISIBLE);
@@ -89,6 +114,9 @@ public class RestServerActivity extends AppCompatActivity {
                 status.setText("The Server is not running.");
             }
         });
+
+        startServer.performClick();
+
 
     }
 }
