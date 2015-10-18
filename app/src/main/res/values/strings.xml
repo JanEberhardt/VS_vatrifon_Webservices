@@ -20,4 +20,45 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="sensor_distance">Distance</string>
+    <string name="sensor_steps">Steps</string>
+    <string name="sensor_light">Ambient Light</string>
+    <string name="sensor_pressure">Atmospheric Pressure</string>
+    <string name="sensor_temp">Temperature</string>
+    <string name="sensor_humidity">Ambient Humidity</string>
+
+    <string name="sensor_x">X-Axis</string>
+    <string name="sensor_y">Y-Axis</string>
+    <string name="sensor_z">Z-Axis</string>
+    <string name="sensor_drift_x">Drift around X-Axis</string>
+    <string name="sensor_drift_y">Drift around Y-Axis</string>
+    <string name="sensor_drift_z">Drift around Z-Axis</string>
+    <string name="sensor_iron_bias_x">Iron bias estimation X-Axis</string>
+    <string name="sensor_iron_bias_y">Iron bias estimation Y-Axis</string>
+    <string name="sensor_iron_bias_z">Iron bias estimation Z-Axis</string>
+    <string name="sensor_scalar_component">Scalar Component (optional)</string>
+
+    <string name="sensor_mpss">m/s<sup>2</sup></string>
+    <string name="sensor_cm">cm</string>
+    <string name="sensor_hpa">hPa</string>
+    <string name="sensor_lux">lux</string>
+    <string name="sensor_radps">rad/s</string>
+    <string name="sensor_mutesla">&#181;T</string>
+    <string name="sensor_relpercent">% rel</string>
+    <string name="sensor_degreecel">°C</string>
+    <string name="sensor_unitless">unitless</string>
+
+
+    <string name="sensor_undefined">undefined value</string>
+    <string name="sensor_no_unit"></string>
+
+    <string name="sensor_name">Name</string>
+    <string name="sensor_vendor">Vendor</string>
+    <string name="sensor_version">Version</string>
+    <string name="sensor_power">Power consumption</string>
+    <string name="sensor_min_delay">Minimum Delay</string>
+    <string name="sensor_max_range">Maximum Range</string>
+    <string name="sensor_resolution">Resolution</string>
+
 </resources>
