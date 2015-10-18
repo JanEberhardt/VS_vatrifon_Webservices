@@ -23,6 +23,8 @@ public class JsonSensor extends RawHttpSensor{
 
     @Override
     public double parseResponse(String response) {
+        if(response == null)
+            return -999.0;
 
         // first let's remove the "HTTP/1.1..." garbage in front of the actual json
         int begin = response.indexOf("{");

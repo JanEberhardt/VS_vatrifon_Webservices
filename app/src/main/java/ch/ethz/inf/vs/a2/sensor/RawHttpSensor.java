@@ -30,6 +30,8 @@ public class RawHttpSensor extends AbstractSensor{
     public double parseResponse(String response) {
         // we parse the html string by using Jsoup!
         // this a an external library that we added in the libs folder
+        if(response == null)
+            return -999.00;
         Document doc = Jsoup.parse(response);
         // finds spans with class getterValue
         Elements es = doc.select("span.getterValue");
