@@ -38,6 +38,8 @@ public class RestServerService extends Service {
     Vibrator vibrator;
     public Boolean serverRunning;
 
+    private UniversalListener l;
+
     public RestServerService() {
     }
 
@@ -119,8 +121,12 @@ public class RestServerService extends Service {
 
         sensorList = new ArrayList<Sensor>();
 
+        // register the sensor listener and build the sensorList
+        l = new UniversalListener();
         while (iterator.hasNext()) {
-            sensorList.add((Sensor) iterator.next());
+            Sensor s = (Sensor) iterator.next();
+            sensorList.add(s);
+            sm.registerListener(l, s, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
     }
@@ -255,6 +261,7 @@ public class RestServerService extends Service {
                 response += "<b>Maximum Range: </b>" + sensor.getMaximumRange() + "</br>";
                 response += "<b>Resolution: </b>" + sensor.getResolution() + "</br>";
 
+                float[] data = UniversalSensorDataCacher.get(sensor.hashCode());
 
                 int sensorType = sensor.getType();
                 SensorData[] res;
@@ -263,85 +270,85 @@ public class RestServerService extends Service {
                     case Sensor.TYPE_LINEAR_ACCELERATION:
                     case Sensor.TYPE_GRAVITY:
                         res = new SensorData[3];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_mpss);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_mpss);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_mpss);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_mpss);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_mpss);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_mpss);
                         break;
                     case Sensor.TYPE_GYROSCOPE:
                         res = new SensorData[3];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_radps);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_radps);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_radps);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_radps);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_radps);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_radps);
                         break;
                     case Sensor.TYPE_GYROSCOPE_UNCALIBRATED:
                         res = new SensorData[6];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_radps);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_radps);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_radps);
-                        res[3] = new SensorData(R.string.sensor_drift_x, 0, R.string.sensor_radps);
-                        res[4] = new SensorData(R.string.sensor_drift_y, 0, R.string.sensor_radps);
-                        res[5] = new SensorData(R.string.sensor_drift_z, 0, R.string.sensor_radps);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_radps);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_radps);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_radps);
+                        res[3] = new SensorData(R.string.sensor_drift_x, data[3], R.string.sensor_radps);
+                        res[4] = new SensorData(R.string.sensor_drift_y, data[4], R.string.sensor_radps);
+                        res[5] = new SensorData(R.string.sensor_drift_z, data[5], R.string.sensor_radps);
                         break;
                     case Sensor.TYPE_ROTATION_VECTOR:
                         res = new SensorData[4];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_unitless);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_unitless);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_unitless);
-                        res[3] = new SensorData(R.string.sensor_scalar_component, 0, R.string.sensor_unitless);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_unitless);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_unitless);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_unitless);
+                        res[3] = new SensorData(R.string.sensor_scalar_component, data[3], R.string.sensor_unitless);
                         break;
                     case Sensor.TYPE_STEP_COUNTER:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_steps, 0, R.string.sensor_no_unit);
+                        res[0] = new SensorData(R.string.sensor_steps, data[0], R.string.sensor_no_unit);
                         break;
                     case Sensor.TYPE_GAME_ROTATION_VECTOR:
                     case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR:
                         res = new SensorData[3];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_unitless);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_unitless);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_unitless);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_unitless);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_unitless);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_unitless);
                         break;
                     case Sensor.TYPE_MAGNETIC_FIELD:
                         res = new SensorData[3];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_mutesla);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_mutesla);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_mutesla);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_mutesla);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_mutesla);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_mutesla);
                         break;
                     case Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED:
                         res = new SensorData[6];
-                        res[0] = new SensorData(R.string.sensor_x, 0, R.string.sensor_mutesla);
-                        res[1] = new SensorData(R.string.sensor_y, 0, R.string.sensor_mutesla);
-                        res[2] = new SensorData(R.string.sensor_z, 0, R.string.sensor_mutesla);
-                        res[3] = new SensorData(R.string.sensor_iron_bias_x, 0, R.string.sensor_mutesla);
-                        res[4] = new SensorData(R.string.sensor_iron_bias_y, 0, R.string.sensor_mutesla);
-                        res[5] = new SensorData(R.string.sensor_iron_bias_z, 0, R.string.sensor_mutesla);
+                        res[0] = new SensorData(R.string.sensor_x, data[0], R.string.sensor_mutesla);
+                        res[1] = new SensorData(R.string.sensor_y, data[1], R.string.sensor_mutesla);
+                        res[2] = new SensorData(R.string.sensor_z, data[2], R.string.sensor_mutesla);
+                        res[3] = new SensorData(R.string.sensor_iron_bias_x, data[3], R.string.sensor_mutesla);
+                        res[4] = new SensorData(R.string.sensor_iron_bias_y, data[4], R.string.sensor_mutesla);
+                        res[5] = new SensorData(R.string.sensor_iron_bias_z, data[5], R.string.sensor_mutesla);
                         break;
                     case Sensor.TYPE_AMBIENT_TEMPERATURE:
                     case Sensor.TYPE_TEMPERATURE:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_temp, 0, R.string.sensor_degreecel);
+                        res[0] = new SensorData(R.string.sensor_temp, data[0], R.string.sensor_degreecel);
                         break;
                     case Sensor.TYPE_LIGHT:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_light, 0, R.string.sensor_lux);
+                        res[0] = new SensorData(R.string.sensor_light, data[0], R.string.sensor_lux);
                         break;
                     case Sensor.TYPE_PRESSURE:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_pressure, 0, R.string.sensor_hpa);
+                        res[0] = new SensorData(R.string.sensor_pressure, data[0], R.string.sensor_hpa);
                         break;
                     case Sensor.TYPE_PROXIMITY:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_distance, 0, R.string.sensor_cm);
+                        res[0] = new SensorData(R.string.sensor_distance, data[0], R.string.sensor_cm);
                         break;
                     case Sensor.TYPE_RELATIVE_HUMIDITY:
                         res = new SensorData[1];
-                        res[0] = new SensorData(R.string.sensor_humidity, 0, R.string.sensor_relpercent);
+                        res[0] = new SensorData(R.string.sensor_humidity, data[0], R.string.sensor_relpercent);
                         break;
                     // default case, just print the sensor readings...
                     default:
                         res = new SensorData[3];
-                        res[0] = new SensorData(R.string.sensor_undefined, 0, R.string.sensor_no_unit);
-                        res[1] = new SensorData(R.string.sensor_undefined, 0, R.string.sensor_no_unit);
-                        res[2] = new SensorData(R.string.sensor_undefined, 0, R.string.sensor_no_unit);
+                        res[0] = new SensorData(R.string.sensor_undefined, data[0], R.string.sensor_no_unit);
+                        res[1] = new SensorData(R.string.sensor_undefined, data[1], R.string.sensor_no_unit);
+                        res[2] = new SensorData(R.string.sensor_undefined, data[2], R.string.sensor_no_unit);
                 }
 
 
@@ -357,14 +364,17 @@ public class RestServerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
 
     public void onDestroy() {
         serverRunning = false;
-        Log.d(DEBUG_TAG, "Service destroied");
+        Log.d(DEBUG_TAG, "Service destroyed");
+
+        // unregister the sensor listener
+        SensorManager sm = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+        sm.unregisterListener(l);
 
         try {
             serverThread.interrupt();

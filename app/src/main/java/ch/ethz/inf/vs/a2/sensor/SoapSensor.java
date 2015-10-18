@@ -13,6 +13,8 @@ import ch.ethz.inf.vs.a2.http.RemoteServerConfiguration;
 
 /**
  * Created by jan on 16.10.15.
+ *
+ * soap request using ksoap2
  */
 public class SoapSensor extends AbstractSensor {
     public String WSDL_URL = "http://vslab.inf.ethz.ch:8080/SunSPOTWebServices/SunSPOTWebservice/";
@@ -58,7 +60,7 @@ public class SoapSensor extends AbstractSensor {
                     // Property which holds input parameters
                     PropertyInfo pi = new PropertyInfo();
                     // Set Name
-                    pi.setName("getSpot");
+                    pi.setName("id");
                     // Set Value
                     pi.setValue("Spot3");
                     // Set dataType
@@ -69,6 +71,8 @@ public class SoapSensor extends AbstractSensor {
                     SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                             SoapEnvelope.VER11);
                     envelope.dotNet = true;
+                    envelope.setAddAdornments(false);
+                    envelope.implicitTypes = true;
                     // Set output SOAP object
                     envelope.setOutputSoapObject(request);
                     // Create HTTP call object

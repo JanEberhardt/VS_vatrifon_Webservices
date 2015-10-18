@@ -44,7 +44,7 @@
     <string name="sensor_hpa">hPa</string>
     <string name="sensor_lux">lux</string>
     <string name="sensor_radps">rad/s</string>
-    <string name="sensor_mutesla">&#181;T</string>
+    <string name="sensor_mutesla">&amp;micro;"T</string>
     <string name="sensor_relpercent">% rel</string>
     <string name="sensor_degreecel">°C</string>
     <string name="sensor_unitless">unitless</string>
