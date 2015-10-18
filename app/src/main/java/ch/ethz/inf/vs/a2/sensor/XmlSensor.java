@@ -29,10 +29,10 @@ public class XmlSensor extends AbstractSensor {
 
     @Override
     public double parseResponse(String response) {
-        String textResult = response;
-        InputStream resultStream = new ByteArrayInputStream(textResult.getBytes());
-
+        InputStream resultStream = new ByteArrayInputStream(response.getBytes());
         XmlPullParser parser;
+        if(response == "error")
+            return -999.0;
         try {
             parser = Xml.newPullParser();
             parser.setInput(resultStream, null);
@@ -49,7 +49,7 @@ public class XmlSensor extends AbstractSensor {
                 return Double.parseDouble(val);
             }
         } catch (IOException | XmlPullParserException e){
-            return 0.0;
+            return -999.0;
         }
     }
 

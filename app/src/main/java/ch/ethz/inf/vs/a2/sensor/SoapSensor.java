@@ -1,6 +1,7 @@
 package ch.ethz.inf.vs.a2.sensor;
 
 import android.util.Log;
+import android.util.Xml;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -8,37 +9,22 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
-import ch.ethz.inf.vs.a2.http.RemoteServerConfiguration;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by jan on 16.10.15.
  *
  * soap request using ksoap2
  */
-public class SoapSensor extends AbstractSensor {
-    public String WSDL_URL = "http://vslab.inf.ethz.ch:8080/SunSPOTWebServices/SunSPOTWebservice/";
-    public String NAMESPACE = "http://vslab.inf.ethz.ch:8080/SunSPOTWebServices/";
-    public String METHOD_NAME = "getSpot/";
-
-    HttpTransportSE httpTransport;
-    @Override
-    protected void setHttpClient() {
-        String host = RemoteServerConfiguration.HOST;
-        int port = RemoteServerConfiguration.SOAP_PORT;
-        String path = RemoteServerConfiguration.SPOT_3_URL;
-
-        httpTransport = new HttpTransportSE(WSDL_URL);
-        // allows capture of raw request/respose in Logcat
-        httpTransport.debug = true;
-
-    }
+public class SoapSensor extends XmlSensor {
 
     @Override
-    public double parseResponse(String response) {
-        Log.d("###", "response in parseResponse: "+response);
-        return 0;
-    }
+    protected void setHttpClient() {}
 
     @Override
     public void getTemperature() throws NullPointerException {
