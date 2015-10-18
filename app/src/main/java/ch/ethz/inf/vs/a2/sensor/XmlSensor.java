@@ -31,7 +31,7 @@ public class XmlSensor extends AbstractSensor {
     public double parseResponse(String response) {
         InputStream resultStream = new ByteArrayInputStream(response.getBytes());
         XmlPullParser parser;
-        if(response == "error")
+        if(response.equals("error"))
             return -999.0;
         try {
             parser = Xml.newPullParser();
@@ -70,7 +70,7 @@ public class XmlSensor extends AbstractSensor {
         sb.append("</ns2:getSpot>");
         sb.append("</S:Body>");
         sb.append("</S:Envelope>");
-        StringEntity se = null;
+        StringEntity se;
         try {
             se = new StringEntity(sb.toString(), HTTP.UTF_8);
             se.setContentType("text/xml");

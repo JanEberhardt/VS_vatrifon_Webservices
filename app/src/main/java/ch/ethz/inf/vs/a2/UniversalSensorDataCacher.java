@@ -13,7 +13,7 @@ public class UniversalSensorDataCacher {
 
     public static float[] get(int hash){
         if(map == null)
-            map = new HashMap<String, float[]>();
+            map = new HashMap<>();
         float[] res = map.get(Integer.toString(hash));
         if(res == null){
             // since in the biggest case we need 6 different data values...
@@ -25,7 +25,7 @@ public class UniversalSensorDataCacher {
 
     public static void set(int hash, float[] data){
         if(map == null)
-            map = new HashMap<String, float[]>();
+            map = new HashMap<>();
         map.put(Integer.toString(hash), data);
     }
 }

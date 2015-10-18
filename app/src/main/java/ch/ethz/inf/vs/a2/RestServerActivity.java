@@ -2,17 +2,10 @@ package ch.ethz.inf.vs.a2;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,10 +13,8 @@ import android.widget.TextView;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 
 public class RestServerActivity extends AppCompatActivity {
 
@@ -98,7 +89,8 @@ public class RestServerActivity extends AppCompatActivity {
                 }
 
 
-                status.setText("The Server is running on IP " + serverIP + " on port " + SERVER_PORT);
+                String temp = "The Server is running on IP " + serverIP + " on port " + SERVER_PORT;
+                status.setText(temp);
             }
         });
 
@@ -111,7 +103,8 @@ public class RestServerActivity extends AppCompatActivity {
                 serverRunning = false;
                 startServer.setVisibility(View.VISIBLE);
                 stopServer.setVisibility(View.GONE);
-                status.setText("The Server is not running.");
+                String temp = "The Server is not running.";
+                status.setText(temp);
             }
         });
 

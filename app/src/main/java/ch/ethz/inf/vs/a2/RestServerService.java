@@ -2,7 +2,6 @@ package ch.ethz.inf.vs.a2;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.res.Resources;
 
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -10,28 +9,21 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Button;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class RestServerService extends Service {
     String DEBUG_TAG = "###RestServerService###";
     ServerSocket server_socket;
-    InetAddress address;
     Thread serverThread;
     List<Sensor> sensorList;
     MediaPlayer mp;
@@ -50,7 +42,7 @@ public class RestServerService extends Service {
 
             while (!Thread.currentThread().isInterrupted()) {
 
-                Socket socket = null;
+                Socket socket;
 
 
                 try {
@@ -82,7 +74,7 @@ public class RestServerService extends Service {
         public void run() {
             Log.d(DEBUG_TAG, "great");
 
-            BufferedReader input = null;
+            BufferedReader input;
             try {
                 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -119,7 +111,7 @@ public class RestServerService extends Service {
         List<android.hardware.Sensor> sensors = sm.getSensorList(android.hardware.Sensor.TYPE_ALL);
         Iterator iterator = sensors.iterator();
 
-        sensorList = new ArrayList<Sensor>();
+        sensorList = new ArrayList<>();
 
         // register the sensor listener and build the sensorList
         l = new UniversalListener();
@@ -133,7 +125,6 @@ public class RestServerService extends Service {
 
 
     public String handleRequest(String request) {
-        String response = "";
         if (request.substring(0, 3).contains("GET")) {
             String[] path = request.substring(3, request.indexOf("HTTP/1.1") - 1).split("/");
             if (path.length > 2) {

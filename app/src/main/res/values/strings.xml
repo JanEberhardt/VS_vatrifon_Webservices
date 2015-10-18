@@ -51,7 +51,7 @@
 
 
     <string name="sensor_undefined">undefined value</string>
-    <string name="sensor_no_unit"></string>
+    <string name="sensor_no_unit"/>
 
     <string name="sensor_name">Name</string>
     <string name="sensor_vendor">Vendor</string>
