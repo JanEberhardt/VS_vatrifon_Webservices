@@ -346,9 +346,18 @@ public class RestServerService extends Service {
                     // default case, just print the sensor readings...
                     default:
                         res = new SensorData[3];
+                        float d1, d2;
+                        if(data.length==1)
+                            d1 = 0;
+                        else
+                            d1 = data[1];
+                        if(data.length==1 || data.length==2)
+                            d2 = 0;
+                        else
+                            d2 = data[2];
                         res[0] = new SensorData(R.string.sensor_undefined, data[0], R.string.sensor_no_unit);
-                        res[1] = new SensorData(R.string.sensor_undefined, data[1], R.string.sensor_no_unit);
-                        res[2] = new SensorData(R.string.sensor_undefined, data[2], R.string.sensor_no_unit);
+                        res[1] = new SensorData(R.string.sensor_undefined, d1, R.string.sensor_no_unit);
+                        res[2] = new SensorData(R.string.sensor_undefined, d2, R.string.sensor_no_unit);
                 }
 
 

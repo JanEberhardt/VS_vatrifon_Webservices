@@ -4,8 +4,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-import ch.ethz.inf.vs.a2.sensor.SensorListener;
-
 /**
  * Created by jan on 18.10.15.
  *
